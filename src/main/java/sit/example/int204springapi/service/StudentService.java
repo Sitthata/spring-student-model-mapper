@@ -18,11 +18,7 @@ public class StudentService {
 
     public List<StudentDTO> getAllStudent() {
         List<Student> students = repository.findAll();
-        TypeMap<Student, StudentDTO> propertyMapper = this.modelMapper
-                .createTypeMap(Student.class, StudentDTO.class);
-        propertyMapper.addMapping(Student::getScore, StudentDTO::setGrade);
-        return students.stream()
-                .map(student -> modelMapper.map(student, StudentDTO.class)).toList();
+        return students.stream().map(this::convertToDTO).toList();
     }
 
     public StudentDTO addStudent(StudentDTO studentDTO) {
