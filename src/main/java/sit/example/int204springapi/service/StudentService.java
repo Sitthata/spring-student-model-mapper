@@ -18,9 +18,6 @@ public class StudentService {
 
     public List<StudentDTO> getAllStudent() {
         List<Student> students = repository.findAll();
-        TypeMap<Student, StudentDTO> propertyMapper = this.modelMapper
-                .createTypeMap(Student.class, StudentDTO.class);
-        propertyMapper.addMapping(Student::getScore, StudentDTO::setGrade);
         return students.stream()
                 .map(student -> modelMapper.map(student, StudentDTO.class)).toList();
     }
@@ -28,24 +25,7 @@ public class StudentService {
     public StudentDTO addStudent(StudentDTO studentDTO) {
         Student student = modelMapper.map(studentDTO, Student.class);
         repository.save(student);
-        return convertToDTO(student);
-    }
-
-    private Character calculateGrade(Integer score) {
-        if (score >= 90) return 'A';
-        else if (score >= 80) return 'B';
-        else if (score >= 70) return 'C';
-        else if (score >= 60) return 'D';
-        else return 'F';
-    }
-
-    private StudentDTO convertToDTO(Student student) {
-        return StudentDTO.builder()
-                .id(student.getId())
-                .name(student.getName())
-                .score(student.getScore())
-                .grade(calculateGrade(student.getScore()))
-                .build();
+        return modelMapper.map(student, StudentDTO.class);
     }
 
 }
