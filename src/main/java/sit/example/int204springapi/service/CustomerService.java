@@ -38,14 +38,11 @@ public class CustomerService {
         if (!customer.getId().equals(id)) {
             throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Customer ID not match");
         }
-        Customer currentCustomer = customerRepository.findById(id).orElseThrow(
+        customerRepository.findById(id).orElseThrow(
                 () -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Customer not found")
         );
-        currentCustomer.setCustomerName(customer.getCustomerName());
-        currentCustomer.setContactLastName(customer.getContactLastName());
-        currentCustomer.setContactFirstName(customer.getContactFirstName());
-        currentCustomer.setCreditLimit(customer.getCreditLimit());
-        customerRepository.save(currentCustomer);
+
+        customerRepository.save(customer);
     }
 
     public void deleteCustomer(Integer id) {
