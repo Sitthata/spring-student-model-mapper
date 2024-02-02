@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import sit.example.int204springapi.dto.OfficeDTO;
@@ -59,5 +60,9 @@ public class OfficeService {
 
     public List<Employee> getEmployees(Integer id) {
         return employeeRepository.findByOfficeId(id);
+    }
+
+    public List<Office> getOfficeByCity(String city) {
+        return officeRepository.findByCityContains(city).orElse(officeRepository.findAll());
     }
 }

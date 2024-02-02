@@ -33,6 +33,7 @@ public class Office {
     private String phone;
 
     @JsonIgnoreProperties("office")
+    @JsonIgnore
     @OneToMany(mappedBy = "office", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Employee> employeeList = new ArrayList<>();
 }

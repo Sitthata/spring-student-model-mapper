@@ -1,7 +1,5 @@
 package sit.example.int204springapi.dto.convert;
 
-import org.hibernate.Internal;
-import org.hibernate.boot.model.source.spi.IdentifierSource;
 import org.modelmapper.Converter;
 import org.modelmapper.spi.MappingContext;
 import sit.example.int204springapi.dto.StudentDTO;
