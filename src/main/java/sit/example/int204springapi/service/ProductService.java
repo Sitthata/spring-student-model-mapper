@@ -14,9 +14,16 @@ import java.util.List;
 public class ProductService {
     private final ProductRepository repository;
 
-    public List<Product> findByBuyPriceAndProductName(Double lower, Double upper, String productName) {
+    public List<Product> findByBuyPriceAndProductName(Double lower, Double upper, String productName, String sortBy, String sortDirection) {
         if (lower == null && upper == null && productName == null)
             return repository.findAll();
+
+        return repository.findByBuyPriceBetweenAndProductNameContains(lower, upper, productName);
+    }
+    public List<Product> findByBuyPriceAndProductName(Double lower, Double upper, String productName, String sortDirection,String sortBy, String direction) {
+        if (lower == null && upper == null && productName == null)
+            return repository.findAll();
+
         return repository.findByBuyPriceBetweenAndProductNameContains(lower, upper, productName);
     }
 

@@ -18,8 +18,10 @@ public class ProductController {
     @GetMapping("")
     public ResponseEntity<List<Product>> getByBuyPriceAndProductName(@RequestParam(required = false) Double lower,
                                                                      @RequestParam(required = false) Double upper,
-                                                                     @RequestParam(required = false) String productName) {
-        return ResponseEntity.ok(productService.findByBuyPriceAndProductName(lower, upper, productName));
+                                                                     @RequestParam(required = false) String productName,
+                                                                     @RequestParam(defaultValue = "") String sortBy,
+                                                                     @RequestParam(defaultValue = "asc") String sortDirection) {
+        return ResponseEntity.ok(productService.findByBuyPriceAndProductName(lower, upper, productName,sortBy,sortDirection));
     }
 
     @GetMapping("/product-line/{productLine}")
