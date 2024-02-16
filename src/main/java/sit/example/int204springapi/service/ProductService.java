@@ -1,6 +1,9 @@
 package sit.example.int204springapi.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
@@ -14,17 +17,26 @@ import java.util.List;
 public class ProductService {
     private final ProductRepository repository;
 
-    public List<Product> findByBuyPriceAndProductName(Double lower, Double upper, String productName, String sortBy, String sortDirection) {
+    public List<Product> findByBuyPriceAndProductName(Double lower, Double upper, String productName) {
         if (lower == null && upper == null && productName == null)
             return repository.findAll();
 
         return repository.findByBuyPriceBetweenAndProductNameContains(lower, upper, productName);
     }
-    public List<Product> findByBuyPriceAndProductName(Double lower, Double upper, String productName, String sortDirection,String sortBy, String direction) {
-        if (lower == null && upper == null && productName == null)
-            return repository.findAll();
 
-        return repository.findByBuyPriceBetweenAndProductNameContains(lower, upper, productName);
+    public List<Product> findByBuyPriceAndProductName(Double lower,
+                                                      Double upper,
+                                                      String productName,
+                                                      String sortBy,
+                                                      String direction,
+                                                      int page,
+                                                      int size) {
+        Sort sort = sortBy.isEmpty() ? Sort.unsorted() : Sort.by(Sort.Direction.fromString(direction), sortBy);
+        if (page == -1 && size == -1) {
+            return repository.findByBuyPriceBetweenAndProductNameContains(lower, upper, productName, sort);
+        }
+        Pageable pageable = PageRequest.of(page, size, sort);
+        return repository.findByBuyPriceBetweenAndProductNameContains(lower, upper, productName, pageable);
     }
 
     public List<Product> findByProductLine(String productLine) {

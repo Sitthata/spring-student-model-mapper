@@ -16,12 +16,14 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping("")
-    public ResponseEntity<List<Product>> getByBuyPriceAndProductName(@RequestParam(required = false) Double lower,
-                                                                     @RequestParam(required = false) Double upper,
-                                                                     @RequestParam(required = false) String productName,
+    public ResponseEntity<List<Product>> getByBuyPriceAndProductName(@RequestParam(defaultValue = "0") Double lower,
+                                                                     @RequestParam(defaultValue = "999999") Double upper,
+                                                                     @RequestParam(defaultValue = "") String productName,
                                                                      @RequestParam(defaultValue = "") String sortBy,
-                                                                     @RequestParam(defaultValue = "asc") String sortDirection) {
-        return ResponseEntity.ok(productService.findByBuyPriceAndProductName(lower, upper, productName,sortBy,sortDirection));
+                                                                     @RequestParam(defaultValue = "ASC") String sortDirection,
+                                                                     @RequestParam(defaultValue = "-1") int page,
+                                                                     @RequestParam(defaultValue = "-1") int size) {
+        return ResponseEntity.ok(productService.findByBuyPriceAndProductName(lower, upper, productName, sortBy, sortDirection, page, size));
     }
 
     @GetMapping("/product-line/{productLine}")
