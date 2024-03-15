@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import sit.example.int204springapi.dto.CustomerDTO;
 import sit.example.int204springapi.models.Customer;
 import sit.example.int204springapi.models.Order;
 import sit.example.int204springapi.service.CustomerService;
@@ -11,13 +12,13 @@ import sit.example.int204springapi.service.CustomerService;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/customer")
+@RequestMapping("api/v1/customers")
 @RequiredArgsConstructor
 public class CustomerController {
 
     private final CustomerService service;
     @GetMapping("")
-    public ResponseEntity<List<Customer>> get() {
+    public ResponseEntity<List<CustomerDTO>> get() {
         return ResponseEntity.ok(service.findAll());
     }
 
@@ -27,7 +28,7 @@ public class CustomerController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Customer> getById(@PathVariable Integer id) {
+    public ResponseEntity<CustomerDTO> getById(@PathVariable Integer id) {
         return ResponseEntity.ok(service.findById(id));
     }
 

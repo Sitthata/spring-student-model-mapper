@@ -1,9 +1,11 @@
 package sit.example.int204springapi.service;
 
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
+import sit.example.int204springapi.dto.CustomerDTO;
 import sit.example.int204springapi.models.Customer;
 import sit.example.int204springapi.models.Order;
 import sit.example.int204springapi.repository.CustomerRepository;
@@ -16,14 +18,18 @@ import java.util.List;
 public class CustomerService {
     private final CustomerRepository customerRepository;
     private final OrderRepository orderRepository;
-    public List<Customer> findAll() {
-        return customerRepository.findAll();
+    private final ModelMapper modelMapper;
+    public List<CustomerDTO> findAll() {
+        return customerRepository.findAll().stream()
+                .map(customer -> modelMapper.map(customer, CustomerDTO.class))
+                .toList();
     }
 
-    public Customer findById(Integer id) {
-        return customerRepository.findById(id).orElseThrow(
+    public CustomerDTO findById(Integer id) {
+        Customer customer = customerRepository.findById(id).orElseThrow(
                 () -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Customer not found")
         );
+        return modelMapper.map(customer, CustomerDTO.class);
     }
 
     public void addCustomer(Customer customer) {

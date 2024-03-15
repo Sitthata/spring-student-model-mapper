@@ -1,9 +1,6 @@
 package sit.example.int204springapi.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -33,5 +30,7 @@ public class Customer {
     private String state;
     private String postalCode;
     private String country;
-    private Integer salesRepEmployeeNumber;
+    @ManyToOne
+    @JoinColumn(name = "salesRepEmployeeNumber")
+    private Employee salesRepEmployee;
 }
