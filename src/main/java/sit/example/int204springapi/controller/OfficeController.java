@@ -21,20 +21,23 @@ public class OfficeController {
     public ResponseEntity<List<Office>> getAll() {
         return ResponseEntity.ok(officeService.getAllOffices());
     }
+    @PostMapping("")
+    public ResponseEntity<String> add(@RequestBody Office office) {
+        return ResponseEntity.ok(officeService.addNewOffice(office));
+    }
+//    @GetMapping("{id}")
+//    public ResponseEntity<Office> get(@PathVariable Integer id) {
+//        return ResponseEntity.ok(officeService.getById(id));
+//    }
 
-    @GetMapping("{id}")
-    public ResponseEntity<Office> get(@PathVariable Integer id) {
-        return ResponseEntity.ok(officeService.getById(id));
+    @GetMapping("{city}")
+    public ResponseEntity<List<Office>> getByCity(@PathVariable String city) {
+        return  ResponseEntity.ok(officeService.getOfficeByCity(city));
     }
 
     @GetMapping("{id}/employees")
     public ResponseEntity<List<Employee>> getEmployees(@PathVariable Integer id) {
         return ResponseEntity.ok(officeService.getEmployees(id));
-    }
-
-    @PostMapping("add-office")
-    public ResponseEntity<String> add(@RequestBody Office office) {
-        return ResponseEntity.ok(officeService.addNewOffice(office));
     }
 
     @DeleteMapping("remove-office/{id}")

@@ -1,14 +1,19 @@
 package sit.example.int204springapi.dto;
 
-import sit.example.int204springapi.models.Office;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-public record EmployeeDTO(Integer id,
-                          String lastName,
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class EmployeeDTO {
+    private String firstName;
+    private String lastName;
 
-                          String firstName,
-                          String extension,
-                          String email,
-                          Office office,
-                          EmployeeDTO manager,
-                          String jobTitle) {
+    public String getName() {
+        return String.format("%s %s", firstName, lastName);
+    }
 }
