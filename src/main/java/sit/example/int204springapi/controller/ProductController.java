@@ -1,9 +1,12 @@
 package sit.example.int204springapi.controller;
 
-import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
+import sit.example.int204springapi.exception.Impl.ErrorResponse;
+import sit.example.int204springapi.exception.ItemNotFoundException;
 import sit.example.int204springapi.models.Product;
 import sit.example.int204springapi.service.ProductService;
 
@@ -45,4 +48,12 @@ public class ProductController {
     public ResponseEntity<Product> put(@RequestBody Product product, @PathVariable String id) {
         return ResponseEntity.ok(productService.updateProduct(product, id));
     }
+//    @ExceptionHandler(ItemNotFoundException.class)
+//    @ResponseStatus(code = HttpStatus.NOT_FOUND)
+//    public ResponseEntity<ErrorResponse> handleItemNotFound(ItemNotFoundException ex, WebRequest request) {
+//        ErrorResponse er = new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage(), request.getDescription(false));
+//        er.addValidationError("id 1", "Message 1");
+//        er.setStackTrace(ex.toString());
+//        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(er);
+//    }
 }

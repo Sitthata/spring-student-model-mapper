@@ -7,6 +7,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
+import sit.example.int204springapi.exception.ItemNotFoundException;
 import sit.example.int204springapi.models.Product;
 import sit.example.int204springapi.repository.ProductRepository;
 
@@ -52,7 +53,7 @@ public class ProductService {
 
     public Product findById(String id) {
         return repository.findById(id).orElseThrow(
-                () -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Product not found")
+                () -> new ItemNotFoundException("Product " + id + " not found")
         );
     }
 
